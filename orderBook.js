@@ -1,14 +1,30 @@
 const reconcileOrder = (existingBook, incomingOrder) => {
-  let matchingOrder = null
 
-  for (i = 0; i < existingBook.length; i++) {
+    for (let i = 0; i < existingBook.length; i++) {
     let order = existingBook[i]
+
+    // line 7 checking for buy/sell
+
     if (order.type !== incomingOrder.type) {
       console.log(order, incomingOrder)
+
+      // checking for same quantity and price
+
+      if (
+        order.quantity === incomingOrder.quantity &&
+        order.price === incomingOrder.price
+      ) {
+        console.log(order, incomingOrder)
+        existingBook.splice(i, 1)
+        i--
+        incomingOrder = {}
+      }
     }
   }
+  if (incomingOrder.type) {
+    existingBook.push(incomingOrder)
+  }
 
-  existingBook.push(incomingOrder)
   return existingBook
 }
 
