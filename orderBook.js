@@ -1,7 +1,6 @@
 const reconcileOrder = (existingBook, incomingOrder) => {
-
-    for (let i = 0; i < existingBook.length; i++) {
-    let order = existingBook[i]
+  for (let i = 0; i < existingBook.length; i++) {
+    const order = existingBook[i]
 
     // line 7 checking for buy/sell
 
@@ -14,7 +13,6 @@ const reconcileOrder = (existingBook, incomingOrder) => {
         order.quantity === incomingOrder.quantity &&
         order.price === incomingOrder.price
       ) {
-        console.log(order, incomingOrder)
         existingBook.splice(i, 1)
         i--
         incomingOrder = {}
@@ -25,7 +23,19 @@ const reconcileOrder = (existingBook, incomingOrder) => {
     existingBook.push(incomingOrder)
   }
 
-  return existingBook
+  for (let i = 0; i < existingBook.length; i++) {
+    let order = existingBook[i]
+    //
+    if (
+      order.price === incomingOrder.price &&
+      order.quantity > incomingOrder.quantity
+    ) {
+      existingBook.splice(i, 1)
+      i--
+    }
+
+    return existingBook
+  }
 }
 
 module.exports = reconcileOrder
